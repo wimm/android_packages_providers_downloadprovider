@@ -156,7 +156,7 @@ public class DownloadThread extends Thread {
             //     progress to the database
             long timeLastNotification = 0;
 
-            client = AndroidHttpClient.newInstance(userAgent(), mContext);
+            client = AndroidHttpClient.newInstance(userAgent() /*, mContext*/);
 
             if (stream != null && mInfo.mDestination == Downloads.Impl.DESTINATION_EXTERNAL
                         && !DrmRawContent.DRM_MIMETYPE_MESSAGE_STRING
@@ -223,9 +223,9 @@ http_request_loop:
                         }
                     }
                     if (!Helpers.isNetworkAvailable(mContext)) {
-                        finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                        finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                     } else if (mInfo.mNumFailed < Constants.MAX_RETRIES) {
-                        finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                        finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                         countRetry = true;
                     } else {
                         if (Constants.LOGV) {
@@ -246,7 +246,7 @@ http_request_loop:
                     if (Constants.LOGVV) {
                         Log.v(Constants.TAG, "got HTTP response code 503");
                     }
-                    finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                    finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                     countRetry = true;
                     Header header = response.getFirstHeader("Retry-After");
                     if (header != null) {
@@ -317,7 +317,7 @@ http_request_loop:
                             break http_request_loop;
                         }
                         ++redirectCount;
-                        finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                        finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                         request.abort();
                         break http_request_loop;
                     }
@@ -458,9 +458,9 @@ http_request_loop:
                             }
                         }
                         if (!Helpers.isNetworkAvailable(mContext)) {
-                            finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                            finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                         } else if (mInfo.mNumFailed < Constants.MAX_RETRIES) {
-                            finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                            finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                             countRetry = true;
                         } else {
                             if (Constants.LOGV) {
@@ -507,9 +507,9 @@ http_request_loop:
                                 }
                                 finalStatus = Downloads.Impl.STATUS_PRECONDITION_FAILED;
                             } else if (!Helpers.isNetworkAvailable(mContext)) {
-                                finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                                finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                             } else if (mInfo.mNumFailed < Constants.MAX_RETRIES) {
-                                finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                                finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                                 countRetry = true;
                             } else {
                                 if (Constants.LOGV) {
@@ -544,9 +544,9 @@ http_request_loop:
                                     }
                                     finalStatus = Downloads.Impl.STATUS_LENGTH_REQUIRED;
                                 } else if (!Helpers.isNetworkAvailable(mContext)) {
-                                    finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                                    finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                                 } else if (mInfo.mNumFailed < Constants.MAX_RETRIES) {
-                                    finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                                    finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                                     countRetry = true;
                                 } else {
                                     if (Constants.LOGV) {
@@ -613,7 +613,7 @@ http_request_loop:
                                 if (Constants.LOGV) {
                                     Log.v(Constants.TAG, "paused " + mInfo.mUri);
                                 }
-                                finalStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                                finalStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                                 request.abort();
                                 break http_request_loop;
                             }

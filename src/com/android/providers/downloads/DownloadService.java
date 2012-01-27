@@ -674,10 +674,10 @@ public class DownloadService extends Service {
             if (info.mStatus == 0
                     || info.mStatus == Downloads.Impl.STATUS_PENDING
                     || info.mStatus == Downloads.Impl.STATUS_RUNNING) {
-                info.mStatus = Downloads.Impl.STATUS_RUNNING_PAUSED;
+                info.mStatus = Downloads.Impl.STATUS_PAUSED_BY_APP;
                 Uri uri = ContentUris.withAppendedId(Downloads.Impl.CONTENT_URI, info.mId);
                 ContentValues values = new ContentValues();
-                values.put(Downloads.Impl.COLUMN_STATUS, Downloads.Impl.STATUS_RUNNING_PAUSED);
+                values.put(Downloads.Impl.COLUMN_STATUS, Downloads.Impl.STATUS_PAUSED_BY_APP);
                 getContentResolver().update(uri, values, null, null);
             }
         }
@@ -823,7 +823,7 @@ public class DownloadService extends Service {
         if (Downloads.Impl.isStatusCompleted(info.mStatus)) {
             return -1;
         }
-        if (info.mStatus != Downloads.Impl.STATUS_RUNNING_PAUSED) {
+        if (info.mStatus != Downloads.Impl.STATUS_PAUSED_BY_APP) {
             return 0;
         }
         if (info.mNumFailed == 0) {

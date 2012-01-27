@@ -138,7 +138,7 @@ public class DownloadInfo {
             //     without a chance to update the database
             return true;
         }
-        if (mStatus == Downloads.Impl.STATUS_RUNNING_PAUSED) {
+        if (mStatus == Downloads.Impl.STATUS_PAUSED_BY_APP) {
             if (mNumFailed == 0) {
                 // download is waiting for network connectivity to return before it can resume
                 return true;
@@ -172,7 +172,7 @@ public class DownloadInfo {
             // download is explicit marked as ready to start
             return true;
         }
-        if (mStatus == Downloads.Impl.STATUS_RUNNING_PAUSED) {
+        if (mStatus == Downloads.Impl.STATUS_PAUSED_BY_APP) {
             if (mNumFailed == 0) {
                 // download is waiting for network connectivity to return before it can resume
                 return true;
