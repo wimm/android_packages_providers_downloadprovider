@@ -156,7 +156,7 @@ public class DownloadThread extends Thread {
                 Log.v(Constants.TAG, "initiating download for " + mInfo.mUri);
             }
 
-            client = AndroidHttpClient.newInstance(userAgent(), mContext);
+            client = AndroidHttpClient.newInstance(userAgent() /*, mContext */);
 
             boolean finished = false;
             while(!finished) {
