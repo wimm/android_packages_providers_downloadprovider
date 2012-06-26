@@ -423,6 +423,9 @@ public class DownloadInfo {
             case ConnectivityManager.TYPE_WIFI:
                 return DownloadManager.Request.NETWORK_WIFI;
 
+            case ConnectivityManager.TYPE_BLUETOOTH:
+                return DownloadManager.Request.NETWORK_BLUETOOTH;
+
             default:
                 return 0;
         }
